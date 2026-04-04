@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Deutschkurse A1-C1 in Marokko - Ihr Weg nach Deutschland für Studium und Arbeit. Visumunterstützung inklusive.">
+    <title>AuZ allemand | Cours d'allemand Maroc</title>
+    
+    <!-- ========== FAVICON - Browser Tab Icon ========== -->
+    <!-- Simple letter "A" icon that shows in your browser tab -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230077b6'/%3E%3Ctext x='50' y='72' font-size='60' text-anchor='middle' fill='white' font-weight='bold'%3EA%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230077b6'/%3E%3Ctext x='50' y='72' font-size='60' text-anchor='middle' fill='white' font-weight='bold'%3EA%3C/text%3E%3C/svg%3E">
+    <meta name="theme-color" content="#0077b6">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; }
+        
+        html { scroll-padding-top: 80px; scroll-behavior: smooth; }
+        
+        /* Custom Colors */
+        .gradient-text {
+            background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Card Hover Effect */
+        .course-card {
+            transition: all 0.3s ease;
+        }
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 119, 182, 0.15);
+        }
+        
+        /* Floating Animation for CTA */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .btn-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Fade In Animation on Scroll */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.7s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Language Button Active State */
+        .lang-btn.active {
+            background-color: #0077b6;
+            color: white;
+        }
+        
+        /* FAQ Toggle */
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-content.open {
+            max-height: 300px;
+        }
+        
+        /* RTL Support for Arabic */
+        [dir="rtl"] { text-align: right; }
+        [dir="rtl"] .flex-row-reverse-rtl { flex-direction: row-reverse; }
+        
+        /* Success/Error Messages */
+        .success-msg, .error-msg {
+            display: none;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+        }
+        .success-msg.show { display: block; background: #d1fae5; color: #065f46; border: 1px solid #10b981; }
+        .error-msg.show { display: block; background: #fee2e2; color: #991b1b; border: 1px solid #ef4444; }
+        
+        /* Background Pattern */
+        .bg-pattern {
+            background-image: radial-gradient(circle at 1px 1px, rgba(0,119,182,0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 bg-gradient-to-br from-[#0077b6] to-[#005f8f] rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-md">
+                        A
+                    </div>
+                    <span class="text-xl font-bold gradient-text">AuZ allemand</span>
+                    <span class="hidden md:inline text-xs text-gray-500 ml-1">Maroc</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="#accueil" class="nav-link text-gray-700 hover:text-[#0077b6] transition">Accueil</a>
+                    <a href="#cours" class="nav-link text-gray-700 hover:text-[#0077b6] transition">Cours</a>
+                    <a href="#parcours" class="nav-link text-gray-700 hover:text-[#0077b6] transition">Parcours</a>
+                    <a href="#avis" class="nav-link text-gray-700 hover:text-[#0077b6] transition">Avis</a>
+                    <a href="#faq" class="nav-link text-gray-700 hover:text-[#0077b6] transition">FAQ</a>
+                </div>
+                
+                <div class="flex items-center gap-3">
+                    <div class="flex bg-gray-100 rounded-lg p-1">
+                        <button onclick="setLanguage('fr')" class="lang-fr px-3 py-1 rounded text-sm font-medium transition bg-[#0077b6] text-white">FR</button>
+                        <button onclick="setLanguage('de')" class="lang-de px-3 py-1 rounded text-sm font-medium transition text-gray-600 hover:text-[#0077b6]">DE</button>
+                        <button onclick="setLanguage('ar')" class="lang-ar px-3 py-1 rounded text-sm font-medium transition text-gray-600 hover:text-[#0077b6]">AR</button>
+                    </div>
+                    <a href="#contact" class="bg-[#0077b6] text-white px-5 py-2 rounded-lg hover:bg-[#005f8f] transition font-semibold shadow-md">
+                        Contact
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="accueil" class="pt-24 pb-20 md:pt-32 md:pb-28 bg-gradient-to-br from-blue-50 via-white to-blue-50 bg-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="inline-block bg-[#008B8B] text-white px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-sm">
+                        🇲🇦 Votre Centre d'Allemand au Maroc
+                    </div>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+                        Votre chemin vers <span class="gradient-text">l'Allemagne</span> commence ici
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-4">Cours d'allemand en ligne A1-C1 avec professeurs natifs allemands</p>
+                    <p class="text-sm text-gray-500 italic mb-8">Online German courses with native teachers • دورات أونلاين مع مدرسين ألمان</p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                        <a href="#contact" class="btn-float bg-[#0077b6] text-white px-8 py-4 rounded-lg hover:bg-[#005f8f] transition font-bold text-lg text-center shadow-lg">
+                            Consultation Gratuite
+                        </a>
+                        <a href="#cours" class="bg-white text-[#0077b6] border-2 border-[#0077b6] px-8 py-4 rounded-lg hover:bg-blue-50 transition font-bold text-lg text-center shadow-md">
+                            Voir les Cours
+                        </a>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 pt-8 border-t border-gray-200">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-[#0077b6] counter" data-target="387">0</div>
+                            <div class="text-sm text-gray-600">Étudiants formés</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-[#0077b6] counter" data-target="100">0</div>
+                            <div class="text-sm text-gray-600">% En ligne</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="bg-white rounded-2xl shadow-2xl p-8">
+                        <div class="bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl p-8 mb-4 text-center">
+                            <svg class="w-full h-56" viewBox="0 0 400 280" fill="none">
+                                <rect x="50" y="40" width="300" height="55" fill="#000000" rx="4"/>
+                                <rect x="50" y="100" width="300" height="55" fill="#DD0000" rx="4"/>
+                                <rect x="50" y="160" width="300" height="55" fill="#FFCE00" rx="4"/>
+                                <rect x="100" y="85" width="90" height="90" fill="#0077b6" rx="6"/>
+                                <text x="145" y="140" fill="white" font-size="28" font-weight="bold" text-anchor="middle">A1-C1</text>
+                                <circle cx="290" cy="230" r="35" fill="#006233"/>
+                                <path d="M 278 230 L 288 240 L 305 222" stroke="white" stroke-width="4" fill="none" stroke-linecap="round"/>
+                                <text x="290" y="275" text-anchor="middle" fill="#006233" font-size="14" font-weight="bold">Goethe</text>
+                            </svg>
+                        </div>
+                        <p class="text-center font-semibold text-gray-800">Certificats reconnus internationalement</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why German Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-up">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Pourquoi apprendre l'allemand ?</h2>
+                <p class="text-xl text-gray-600">Votre avenir en Europe commence avec l'allemand</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-gradient-to-br from-blue-50 to-white p-8 rounded-xl shadow-lg hover:shadow-xl transition fade-up">
+                    <div class="w-16 h-16 bg-[#0077b6] rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Études en Allemagne</h3>
+                    <p class="text-gray-600">Accès à plus de 400 universités avec formation gratuite ou à faible coût</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-teal-50 to-white p-8 rounded-xl shadow-lg hover:shadow-xl transition fade-up">
+                    <div class="w-16 h-16 bg-[#008B8B] rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Professeurs Natifs Allemands</h3>
+                    <p class="text-gray-600">Apprenez avec des enseignants qualifiés - prononciation authentique</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-green-50 to-white p-8 rounded-xl shadow-lg hover:shadow-xl transition fade-up">
+                    <div class="w-16 h-16 bg-[#006233] rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Opportunités Mondiales</h3>
+                    <p class="text-gray-600">L'allemand est parlé en Allemagne, Autriche, Suisse, Luxembourg et plus</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section id="cours" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-up">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Nos Niveaux de Cours</h2>
+                <p class="text-xl text-gray-600">Du débutant à l'avancé - Trouvez le niveau qui vous correspond</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- A1 Card -->
+                <div class="course-card bg-white rounded-xl shadow-lg p-6 border-t-4 border-[#0077b6] fade-up">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-3xl font-bold text-[#0077b6]">A1</span>
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">Débutant</span>
+                    </div>
+                    <h4 class="text-lg font-bold mb-2">Premiers pas en allemand</h4>
+                    <ul class="space-y-2 mb-6 text-sm">
+                        <li class="flex items-center gap-2">✓ 2 mois (100% en ligne)</li>
+                        <li class="flex items-center gap-2">✓ Professeurs natifs allemands</li>
+                        <li class="flex items-center gap-2">✓ Petits groupes (max. 12)</li>
+                    </ul>
+                    <div class="text-2xl font-bold">1.800 MAD</div>
+                    <div class="text-sm text-gray-500 mb-4">900 MAD/mois</div>
+                    <a href="#contact" class="block w-full bg-[#0077b6] text-white text-center py-3 rounded-lg hover:bg-[#005f8f] transition font-semibold">S'inscrire</a>
+                </div>
+                
+                <!-- A2 Card -->
+                <div class="course-card bg-white rounded-xl shadow-lg p-6 border-t-4 border-[#0077b6] fade-up">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-3xl font-bold text-[#0077b6]">A2</span>
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">Élémentaire</span>
+                    </div>
+                    <h4 class="text-lg font-bold mb-2">Situations quotidiennes</h4>
+                    <ul class="space-y-2 mb-6 text-sm">
+                        <li class="flex items-center gap-2">✓ 2 mois (100% en ligne)</li>
+                        <li class="flex items-center gap-2">✓ Professeurs natifs allemands</li>
+                        <li class="flex items-center gap-2">✓ Communication ciblée</li>
+                    </ul>
+                    <div class="text-2xl font-bold">1.800 MAD</div>
+                    <div class="text-sm text-gray-500 mb-4">900 MAD/mois</div>
+                    <a href="#contact" class="block w-full bg-[#0077b6] text-white text-center py-3 rounded-lg hover:bg-[#005f8f] transition font-semibold">S'inscrire</a>
+                </div>
+                
+                <!-- B1 Card -->
+                <div class="course-card bg-white rounded-xl shadow-lg p-6 border-t-4 border-[#008B8B] fade-up">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-3xl font-bold text-[#008B8B]">B1</span>
+                        <span class="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm font-semibold">Intermédiaire</span>
+                    </div>
+                    <h4 class="text-lg font-bold mb-2">Pour visa et études</h4>
+                    <ul class="space-y-2 mb-6 text-sm">
+                        <li class="flex items-center gap-2">✓ 3 mois (100% en ligne)</li>
+                        <li class="flex items-center gap-2">✓ Professeurs natifs allemands</li>
+                        <li class="flex items-center gap-2">⭐ Niveau requis pour visa</li>
+                    </ul>
+                    <div class="text-2xl font-bold">2.700 MAD</div>
+                    <div class="text-sm text-gray-500 mb-4">900 MAD/mois</div>
+                    <a href="#contact" class="block w-full bg-[#008B8B] text-white text-center py-3 rounded-lg hover:bg-[#006b6b] transition font-semibold">S'inscrire</a>
+                </div>
+                
+                <!-- B2 Card -->
+                <div class="course-card bg-white rounded-xl shadow-lg p-6 border-t-4 border-[#008B8B] fade-up">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-3xl font-bold text-[#008B8B]">B2</span>
+                        <span class="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm font-semibold">Avancé</span>
+                    </div>
+                    <h4 class="text-lg font-bold mb-2">Niveau Universitaire</h4>
+                    <ul class="space-y-2 mb-6 text-sm">
+                        <li class="flex items-center gap-2">✓ 3 mois (100% en ligne)</li>
+                        <li class="flex items-center gap-2">✓ Professeurs natifs allemands</li>
+                        <li class="flex items-center gap-2">✓ Admission universitaire</li>
+                    </ul>
+                    <div class="text-2xl font-bold">2.700 MAD</div>
+                    <div class="text-sm text-gray-500 mb-4">900 MAD/mois</div>
+                    <a href="#contact" class="block w-full bg-[#008B8B] text-white text-center py-3 rounded-lg hover:bg-[#006b6b] transition font-semibold">S'inscrire</a>
+                </div>
+            </div>
+            
+            <!-- Special Package -->
+            <div class="mt-10 bg-gradient-to-r from-red-50 to-orange-50 rounded-xl shadow-lg p-6 border-2 border-red-500 fade-up">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div>
+                        <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">ÉCONOMISEZ 500 MAD</span>
+                        <h3 class="text-2xl font-bold text-red-600 mt-2">Pack Complet A1 → B1</h3>
+                        <p class="text-gray-700">A1 + A2 + B1 ensemble - Cours complet de zéro au niveau visa</p>
+                        <ul class="flex flex-wrap gap-4 mt-3 text-sm">
+                            <li>✓ 7 mois au total</li>
+                            <li>✓ Professeurs natifs allemands</li>
+                            <li>⭐ Consultation visa gratuite</li>
+                        </ul>
+                    </div>
+                    <div class="text-center">
+                        <span class="text-lg text-gray-500 line-through">7.200 MAD</span>
+                        <div class="text-3xl font-bold text-red-600">6.700 MAD</div>
+                        <a href="#contact" class="inline-block mt-2 bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition font-semibold">Réserver le Pack</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Path to Germany -->
+    <section id="parcours" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-up">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Votre Parcours vers l'Allemagne</h2>
+                <p class="text-xl text-gray-600">Nous vous accompagnons de la première heure au visa</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-gray-50 rounded-xl p-6 text-center fade-up">
+                    <div class="w-12 h-12 bg-[#0077b6] rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">1</div>
+                    <h3 class="text-xl font-bold mb-2">Test de niveau gratuit</h3>
+                    <p class="text-gray-600">Évaluation gratuite de votre niveau actuel</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-6 text-center fade-up">
+                    <div class="w-12 h-12 bg-[#0077b6] rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">2</div>
+                    <h3 class="text-xl font-bold mb-2">Choix du cours</h3>
+                    <p class="text-gray-600">Sélectionnez le niveau qui vous correspond</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-6 text-center fade-up">
+                    <div class="w-12 h-12 bg-[#0077b6] rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">3</div>
+                    <h3 class="text-xl font-bold mb-2">Préparation examen Goethe</h3>
+                    <p class="text-gray-600">Préparation intensive aux certifications</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-6 text-center fade-up">
+                    <div class="w-12 h-12 bg-[#008B8B] rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">4</div>
+                    <h3 class="text-xl font-bold mb-2">Certificat Goethe</h3>
+                    <p class="text-gray-600">Obtention du diplôme reconnu mondialement</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-6 text-center fade-up">
+                    <div class="w-12 h-12 bg-[#008B8B] rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">5</div>
+                    <h3 class="text-xl font-bold mb-2">Conseils pour le visa</h3>
+                    <p class="text-gray-600">Aide gratuite pour les documents de visa</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-6 text-center fade-up">
+                    <div class="w-12 h-12 bg-[#006233] rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">✓</div>
+                    <h3 class="text-xl font-bold mb-2">L'Allemagne vous attend !</h3>
+                    <p class="text-gray-600">Commencez votre nouvelle vie en Allemagne</p>
+                </div>
+            </div>
+            
+            <div class="mt-16 bg-gradient-to-r from-[#0077b6] to-[#005f8f] rounded-2xl shadow-2xl p-8 md:p-12 text-white text-center fade-up">
+                <h3 class="text-3xl font-bold mb-4">Prêt pour l'Allemagne ?</h3>
+                <p class="text-xl mb-4 opacity-90">Réservez votre consultation gratuite dès aujourd'hui</p>
+                <a href="#contact" class="inline-block bg-white text-[#0077b6] px-8 py-4 rounded-lg hover:bg-gray-100 transition font-bold text-lg shadow-lg">
+                    Réserver une consultation
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="avis" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-up">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Ils ont réussi leur rêve</h2>
+                <p class="text-xl text-gray-600">Nos étudiants vivent maintenant en Allemagne</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl shadow-lg p-6 fade-up">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center text-2xl font-bold text-[#0077b6]">Y</div>
+                        <div>
+                            <h4 class="font-bold text-lg">Youssef M.</h4>
+                            <p class="text-sm text-gray-500">Étudiant, TU München</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 mb-3">★★★★★</div>
+                    <p class="text-gray-700 italic">"De A1 à B2 en 10 mois ! Les professeurs sont excellents. Je suis maintenant à l'université de Munich."</p>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-lg p-6 fade-up">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-teal-100 rounded-full flex items-center justify-center text-2xl font-bold text-[#008B8B]">S</div>
+                        <div>
+                            <h4 class="font-bold text-lg">Salma K.</h4>
+                            <p class="text-sm text-gray-500">Infirmière, Berlin</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 mb-3">★★★★★</div>
+                    <p class="text-gray-700 italic">"J'ai réussi mon B1, obtenu mon visa et je travaille maintenant comme infirmière à Berlin !"</p>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-lg p-6 fade-up">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center text-2xl font-bold text-[#006233]">A</div>
+                        <div>
+                            <h4 class="font-bold text-lg">Ahmed T.</h4>
+                            <p class="text-sm text-gray-500">Développeur IT, Francfort</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 mb-3">★★★★★</div>
+                    <p class="text-gray-700 italic">"Certificat C1 après 18 mois. Aujourd'hui je travaille chez SAP à Francfort. Merci AuZ !"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-20 bg-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 fade-up">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Questions fréquentes</h2>
+                <p class="text-xl text-gray-600">Tout ce que vous devez savoir</p>
+            </div>
+            
+            <div class="space-y-4 fade-up">
+                <div class="bg-gray-50 rounded-lg overflow-hidden">
+                    <button onclick="toggleFAQ(this)" class="w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-100 transition">
+                        <span class="font-semibold">Quel niveau faut-il pour étudier en Allemagne ?</span>
+                        <svg class="w-5 h-5 text-gray-600 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6">
+                        <p class="pb-4 text-gray-700">La plupart des universités allemandes exigent au minimum le niveau B2 ou C1. Nous vous préparons à tous ces niveaux.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-lg overflow-hidden">
+                    <button onclick="toggleFAQ(this)" class="w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-100 transition">
+                        <span class="font-semibold">Combien de temps pour passer de A1 à B1 ?</span>
+                        <svg class="w-5 h-5 text-gray-600 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6">
+                        <p class="pb-4 text-gray-700">Avec nos cours intensifs, vous pouvez atteindre le niveau B1 en 7 mois (A1, A2, B1).</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-lg overflow-hidden">
+                    <button onclick="toggleFAQ(this)" class="w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-100 transition">
+                        <span class="font-semibold">Les certificats Goethe sont-ils reconnus ?</span>
+                        <svg class="w-5 h-5 text-gray-600 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6">
+                        <p class="pb-4 text-gray-700">Oui, absolument ! Les certificats Goethe sont reconnus mondialement par les universités et les ambassades.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-lg overflow-hidden">
+                    <button onclick="toggleFAQ(this)" class="w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-100 transition">
+                        <span class="font-semibold">Aidez-vous pour les démarches de visa ?</span>
+                        <svg class="w-5 h-5 text-gray-600 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6">
+                        <p class="pb-4 text-gray-700">Oui ! Nous offrons une consultation visa gratuite pour tous nos étudiants. Nous vous aidons avec les documents nécessaires.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-lg overflow-hidden">
+                    <button onclick="toggleFAQ(this)" class="w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-100 transition">
+                        <span class="font-semibold">Les cours sont-ils 100% en ligne ?</span>
+                        <svg class="w-5 h-5 text-gray-600 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-content px-6">
+                        <p class="pb-4 text-gray-700">Oui, tous nos cours sont 100% en ligne avec des professeurs natifs allemands. Vous pouvez apprendre de n'importe où au Maroc.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section id="contact" class="py-20 bg-gradient-to-br from-[#0077b6] to-[#023e8a]">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10 text-white fade-up">
+                <h2 class="text-4xl font-bold mb-4">Commencez votre voyage en Allemagne</h2>
+                <p class="text-xl opacity-90">Consultation gratuite et test de niveau offert</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-2xl p-8 fade-up">
+                <form id="contactForm" action="https://formspree.io/f/xeeplrdg" method="POST" class="space-y-5">
+                    <input type="hidden" name="_subject" value="Nouvelle demande de contact - AuZ allemand">
+                    <input type="hidden" name="_replyto" id="replyToEmail">
+                    
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Nom complet *</label>
+                            <input type="text" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0077b6]">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
+                            <input type="email" name="email" id="contactEmail" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0077b6]">
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Téléphone (WhatsApp) *</label>
+                            <input type="tel" name="phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0077b6]">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Ville *</label>
+                            <select name="city" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0077b6]">
+                                <option value="">Sélectionnez votre ville</option>
+                                <option>Casablanca</option>
+                                <option>Rabat</option>
+                                <option>Marrakech</option>
+                                <option>Fès</option>
+                                <option>Tanger</option>
+                                <option>Autre</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Niveau actuel</label>
+                            <select name="level" class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                                <option>Débutant (aucun niveau)</option>
+                                <option>A1</option>
+                                <option>A2</option>
+                                <option>B1</option>
+                                <option>B2</option>
+                                <option>C1</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Objectif *</label>
+                            <select name="goal" required class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                                <option value="">Sélectionnez votre objectif</option>
+                                <option>Études en Allemagne</option>
+                                <option>Travail en Allemagne</option>
+                                <option>Formation professionnelle</option>
+                                <option>Visa familial</option>
+                                <option>Connaissances générales</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Message (optionnel)</label>
+                        <textarea name="message" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0077b6]"></textarea>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                        <input type="checkbox" name="privacy" required class="mt-1 w-5 h-5">
+                        <label class="text-sm text-gray-700">J'accepte la politique de confidentialité et consens à être contacté *</label>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-[#0077b6] text-white py-4 rounded-lg hover:bg-[#005f8f] transition font-bold text-lg shadow-md">
+                        Demander une consultation gratuite
+                    </button>
+                    
+                    <p class="text-center text-sm text-gray-500">Nous répondons dans les 24 heures</p>
+                </form>
+                
+                <div id="successMessage" class="success-msg mt-4">
+                    ✓ Merci ! Votre demande a été envoyée. Nous vous contacterons très bientôt.
+                </div>
+                <div id="errorMessage" class="error-msg mt-4">
+                    ❌ Une erreur s'est produite. Veuillez réessayer ou nous écrire directement à contact@auz-allemand.com
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-white text-xl font-bold mb-4">AuZ allemand</h3>
+                    <p class="text-sm">Votre centre de langue allemande au Maroc. Cours en ligne avec professeurs natifs.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Cours</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#cours" class="hover:text-white transition">A1 - Débutant</a></li>
+                        <li><a href="#cours" class="hover:text-white transition">A2 - Élémentaire</a></li>
+                        <li><a href="#cours" class="hover:text-white transition">B1 - Intermédiaire</a></li>
+                        <li><a href="#cours" class="hover:text-white transition">B2 - Avancé</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#parcours" class="hover:text-white transition">Consultation visa</a></li>
+                        <li><a href="#" class="hover:text-white transition">Préparation examens</a></li>
+                        <li><a href="#" class="hover:text-white transition">Test de niveau gratuit</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li class="break-all">📧 AuZ-allemand@proton.me</li>
+                        <li>📍 Rabat, Maroc</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
+                <p>&copy; 2026 AuZ allemand Maroc. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language translations
+        const texts = {
+            fr: { heroTitle: "Votre chemin vers l'Allemagne commence ici", heroSubtitle: "Cours d'allemand en ligne A1-C1 avec professeurs natifs allemands" },
+            de: { heroTitle: "Ihr Weg nach Deutschland beginnt hier", heroSubtitle: "Online-Deutschkurse A1-C1 mit deutschen Muttersprachlern" },
+            ar: { heroTitle: "طريقك إلى ألمانيا يبدأ هنا", heroSubtitle: "دورات الألمانية أونلاين A1-C1 مع مدرسين ألمان" }
+        };
+        
+        function setLanguage(lang) {
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-[#0077b6]', 'text-white');
+                btn.classList.add('text-gray-600');
+            });
+            const activeBtn = document.querySelector(`.lang-${lang}`);
+            if (activeBtn) {
+                activeBtn.classList.add('active', 'bg-[#0077b6]', 'text-white');
+            }
+            if (lang === 'ar') {
+                document.documentElement.setAttribute('dir', 'rtl');
+            } else {
+                document.documentElement.setAttribute('dir', 'ltr');
+            }
+            localStorage.setItem('lang', lang);
+        }
+        
+        // FAQ Toggle
+        function toggleFAQ(btn) {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('svg');
+            content.classList.toggle('open');
+            icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0)';
+        }
+        
+        // Scroll Reveal Animation
+        const fadeElements = document.querySelectorAll('.fade-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        fadeElements.forEach(el => observer.observe(el));
+        
+        // Animated Counters
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const target = parseInt(counter.dataset.target);
+            let current = 0;
+            const increment = Math.ceil(target / 50);
+            const updateCounter = () => {
+                if (current < target) {
+                    current += increment;
+                    if (current > target) current = target;
+                    counter.textContent = current;
+                    setTimeout(updateCounter, 25);
+                }
+            };
+            updateCounter();
+        });
+        
+        // Form Submission
+        const form = document.getElementById('contactForm');
+        const successMsg = document.getElementById('successMessage');
+        const errorMsg = document.getElementById('errorMessage');
+        
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                successMsg.classList.remove('show');
+                errorMsg.classList.remove('show');
+                
+                const emailInput = document.getElementById('contactEmail');
+                if (emailInput) {
+                    document.getElementById('replyToEmail').value = emailInput.value;
+                }
+                
+                const formData = new FormData(form);
+                
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    
+                    if (response.ok) {
+                        successMsg.classList.add('show');
+                        form.reset();
+                        setTimeout(() => successMsg.classList.remove('show'), 6000);
+                    } else {
+                        errorMsg.classList.add('show');
+                        setTimeout(() => errorMsg.classList.remove('show'), 6000);
+                    }
+                } catch (err) {
+                    errorMsg.classList.add('show');
+                    setTimeout(() => errorMsg.classList.remove('show'), 6000);
+                }
+            });
+        }
+        
+        // Load saved language
+        const savedLang = localStorage.getItem('lang') || 'fr';
+        setLanguage(savedLang);
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
